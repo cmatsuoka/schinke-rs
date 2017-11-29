@@ -110,6 +110,7 @@ fn schinke(s: &String) -> (String, String) {
         }
     }
 
+    // Rule 7
     if verb.len() < 2 {
         verb.clear();
     }
