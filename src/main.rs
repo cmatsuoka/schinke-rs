@@ -24,15 +24,6 @@ const FIG6B: &'static [&'static str] = &[
     "unt", "bo", "ns", "nt", "ri", "m", "r", "s", "t"
 ];
 
-const FIG6B_I: &'static [&'static str] = &[
-    "iuntur", "erunt", "untur", "iunt", "unt"
-];
-
-const FIG6B_BI: &'static [&'static str] = &[
-    "beris", "bor", "bo"
-];
-
-
 fn main() {
 
     let input = env::args().nth(1).unwrap_or("-".to_string());
@@ -77,7 +68,7 @@ fn schinke(s: &String) -> (String, String) {
     let mut s4: &str = s3;
     for suffix in FIG6A {
         if s3.ends_with(suffix) {
-           s4 = &s3[..s3.len() - suffix.len()];
+           s4 = &s3.trim_right_matches(suffix);
            break
         }
     }
@@ -95,16 +86,13 @@ fn schinke(s: &String) -> (String, String) {
     // Rule 6
     for suffix in FIG6B {
         if s3.ends_with(suffix) {
-           verb += &s3[..s3.len() - suffix.len()];
+           verb += &s3.trim_right_matches(suffix);
            if suffix == &"ero" {
                verb += "eri";
-               break
-           } else if FIG6B_BI.contains(suffix) {
+           } else if suffix == &"beris" || suffix == &"bor" || suffix == &"bo" {
                verb += "bi";
-               break
-           } else if FIG6B_I.contains(suffix) {
+           } else if suffix == &"iuntur" || suffix == &"erunt" || suffix == &"untur" || suffix == &"iunt" || suffix == &"unt" {
                verb += "i";
-               break
            }
            break;
         }
