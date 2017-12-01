@@ -24,6 +24,10 @@ const FIG6B: &'static [&'static str] = &[
     "unt", "bo", "ns", "nt", "ri", "m", "r", "s", "t"
 ];
 
+macro_rules! cmp {
+    ( $a:expr; $( $b:expr ),+ ) => ( false $(|| $a == &$b)* )
+}
+
 fn main() {
 
     let input = env::args().nth(1).unwrap_or("-".to_string());
@@ -73,8 +77,8 @@ fn schinke(s: &String) -> (String, String) {
         }
     }
 
-    let mut noun = "".to_string();
-    let mut verb = "".to_string();
+    let mut noun = String::with_capacity(50);
+    let mut verb = String::with_capacity(50);
 
     // Rule 5
     if s4.len() >= 2 {
@@ -89,12 +93,12 @@ fn schinke(s: &String) -> (String, String) {
            verb += &s3.trim_right_matches(suffix);
            if suffix == &"ero" {
                verb += "eri";
-           } else if suffix == &"beris" || suffix == &"bor" || suffix == &"bo" {
+           } else if cmp!(suffix; "beris", "bor", "bo") {
                verb += "bi";
-           } else if suffix == &"iuntur" || suffix == &"erunt" || suffix == &"untur" || suffix == &"iunt" || suffix == &"unt" {
+           } else if cmp!(suffix; "iuntur", "erunt", "untur", "iunt", "unt") {
                verb += "i";
            }
-           break;
+           break
         }
     }
 
