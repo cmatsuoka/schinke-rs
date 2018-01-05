@@ -72,7 +72,7 @@ fn schinke(s: &String) -> (String, String) {
     let mut s4: &str = s3;
     for suffix in FIG6A {
         if s3.ends_with(suffix) {
-           s4 = &s3.trim_right_matches(suffix);
+           s4 = &s3[..s3.len()-suffix.len()];
            break
         }
     }
@@ -90,7 +90,7 @@ fn schinke(s: &String) -> (String, String) {
     // Rule 6
     for suffix in FIG6B {
         if s3.ends_with(suffix) {
-           verb += &s3.trim_right_matches(suffix);
+           verb += &s3[..s3.len()-suffix.len()];
            if suffix == &"ero" {
                verb += "eri";
            } else if cmp!(suffix; "beris", "bor", "bo") {
